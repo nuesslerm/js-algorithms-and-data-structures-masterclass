@@ -1,0 +1,14 @@
+{
+  "name": "js-algorithms-and-data-structures-masterclass",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:nuesslerm/js-algorithms-and-data-structures-masterclass.git",
+  "author": "nuesslerm@gmail.com",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "eslint": "^7.4.0",
+    "jest": "^26.1.0",
+    "prettier": "^2.0.5"
+  }
+}
