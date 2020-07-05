@@ -106,3 +106,71 @@ function logAtMost5(n) {
 }
 //  O(1) -> constant runtime complexity
 ```
+
+## Space Complexity
+We can also use big O notation to analyze space complexity: how much additional memory do we need to allocate in order to run the code in our algorithm?
+
+space complexity or auxiliary space complexity refers to the space that is required by the algorithm, not including the space taken up by the inputs.
+
+When we talk about space complexity, technically we'll be talking about auxiliary space complexity.
+
+Rules of thumb:
+* Most primitives (booleans, numbers, undefined, null) are constant space
+* Strings require O(n) space (where n is the string length)
+* Reference types are generally O(n), where n is the length (for arrays) or the number of keys (for objects)
+
+```javascript
+function sum(arr) {
+  let total = 0;
+  for (let i = 0; i < arr.length; i++) {
+    total += arr[i];
+  }
+  return total;
+}
+
+// only two variables, which are of type int -> constant space complexity O(1)
+```
+
+```javascript
+function double(arr) {
+  let newArr = [];
+  for (let i = 0; i < arr.length; i++) {
+    newArr.push(2 * arr[i]);
+  }
+  return newArr;
+}
+
+// space that is taken up is directly proportional to the size of the input array 
+// -> linear space complexity O(n)
+```
+
+## Logarithmic complexity
+
+logaritms are the counterpart of exponentiation
+
+Example:
+```
+log_2 (8) = 3 -> 2^3 = 8
+log_2 (value) = exponent -> 2^exponent = value
+```
+
+log === log_2 (log base 2)
+
+Rule of thumb: `The binary logarithm of a number roughly equals the number of times you can divide that number by 2 before you get a value that's less than or equal to one.`
+
+Logarithmic time complexity is great
+
+![Time Complexity](./time-complexit.png)
+
+<u>Examples:</u>
+* Certain searching algorithms have logarithmic time complexity.
+* Efficient sorting algorithms involve logarithms.
+* Recursion sometimes involves logarithmic space complexity.
+
+## Recap
+
+* To analyze the performance of an algorithm, we use Big O Notation
+* Big O Notation can give us a high level understanding of the time or space complexity of an algorithm
+* Big O Notation doesn't care about precision, only about general trends (linear? quadratic? constant?)
+* The time or space complexity (as measured by Big O) depends only on the algorithm, not the hardware used to run the algorithm
+* Big O Notation is everywhere, so get lots of practice!
