@@ -2,6 +2,8 @@ export const binarySearch = (arr, val) => {
   let left = 0;
   let right = arr.length - 1;
 
+  if (arr[right] === val) return right;
+
   while (left < right) {
     let mid = Math.floor(left + (right - left) / 2);
     if (arr[mid] === val) return mid;
@@ -9,7 +11,7 @@ export const binarySearch = (arr, val) => {
     if (arr[mid] > val) {
       right = mid;
     } else {
-      left = mid;
+      left = mid + 1;
     }
   }
 

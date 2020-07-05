@@ -9,8 +9,8 @@ describe('binary search', () => {
     expect(binarySearch([1, 2, 3, 4, 5, 6], 3)).toBe(2);
   });
 
-  it('takes [1,2,3,4,5,6] and value 5', () => {
-    expect(binarySearch([1, 2, 3, 4, 5, 6], 5)).toBe(4);
+  it('takes [1,2,3,4,5] and value 5', () => {
+    expect(binarySearch([1, 2, 3, 4, 5], 5)).toBe(4);
   });
 
   it('takes [1,2,3,4,5,6] and value 7', () => {
