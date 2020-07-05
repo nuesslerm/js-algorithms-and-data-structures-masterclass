@@ -1,10 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { performance } from 'perf_hooks';
-import {
-  addUpTo,
-  countUpAndDown,
-  printAllPairs,
-} from './big-o-notation/big-o-example1';
+import { linearSearchForLoop } from './big-o-notation/search-linear';
 
 console.log('----------------------------------------------------------------');
 
@@ -17,6 +13,6 @@ console.log('----------------------------------------------------------------');
 
 // console.log(countUpAndDown(15));
 
-console.log(printAllPairs(10));
+console.log(linearSearchForLoop([1, 3, 5, 6], 3));
 
 console.log('----------------------------------------------------------------');
