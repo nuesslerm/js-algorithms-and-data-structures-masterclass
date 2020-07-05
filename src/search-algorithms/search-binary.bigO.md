@@ -10,3 +10,7 @@ Worst -> O()
 * Rather than eliminating one element at a time, you can eliminate half of the remaining elements at a time
 * Binary search only works on sorted arrays!
 
+Runtime Complexity:
+
+Best Case -> O(1)
+Average & Worst Case -> O(n*log(n))

@@ -31,7 +31,7 @@ export const binarySearchAlt = (arr, val) => {
     }
     mid = Math.floor((start + end) / 2);
   }
-  console.log(start, mid, end);
+  // console.log(start, mid, end);
 
   if (arr[mid] === val) return mid;
   return -1;
@@ -48,7 +48,6 @@ export const binarySearchShort = (arr, val) => {
 
     mid = Math.floor((start + end) / 2);
   }
-  console.log(start, mid, end);
 
   // if (arr[mid] === val) return mid;
   // return -1;
