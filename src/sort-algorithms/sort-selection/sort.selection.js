@@ -62,4 +62,4 @@ function selectionSort(arr) {
   return arr;
 }
 
-console.log('bubblesort', selectionSort([23, 45, 6, 13, -3, 88]));
+console.log('selectionSort', selectionSort([23, 45, 6, 13, -3, 88]));

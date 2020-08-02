@@ -12,54 +12,105 @@ const swapES2015 = (arr, idx1, idx2) => {
 
 // -------------------------------------------------------------------
 
-/* function selectionSort(arr) {
-  let minIndex;
-
+/* function insertionSort(arr) {
   for (
-    let firstUnsortedIndex = 0;
-    firstUnsortedIndex < arr.length;
-    firstUnsortedIndex++
+    let lastUnsortedIndex = 0;
+    lastUnsortedIndex < arr.length;
+    lastUnsortedIndex++
   ) {
-    minIndex = firstUnsortedIndex;
-    for (let j = firstUnsortedIndex; j < arr.length; j++) {
-      if (arr[j] < arr[minIndex] {
-        minIndex = j;
+    for (let i = lastUnsortedIndex; i >= 0; i--) {
+      if (i === 0) swapES2015(arr, i, lastUnsortedIndex);
+      if (arr[lastUnsortedIndex] > arr[i]) {
+        swapES2015(arr, i + 1, lastUnsortedIndex);
+        break;
       }
     }
+  }
 
-    if (minIndex !== firstUnsortedIndex) swapES5(arr, firstUnsortedIndex, minIndex);
+  return arr;
+} */
+
+// console.log('insertionSort', insertionSort([23, 45, 6, 13, -3, 88]));
+
+//----------------------------------------------------------------------
+
+/* function insertionSort(arr) {
+  for (
+    let lastUnsortedIndex = 1;
+    lastUnsortedIndex < arr.length;
+    lastUnsortedIndex++
+  ) {
+    for (let i = lastUnsortedIndex; i > 0; i--) {
+      if (arr[i - 1] > arr[i]) {
+        swapES2015(arr, i - 1, i);
+      } else {
+        break;
+      }
+    }
   }
 
   return arr;
 }
 
-console.log('bubblesort', selectionSort([23, 45, 6, 13, -3, 88])); */
+console.log('insertionSort', insertionSort([23, 45, 6, 13, -3, 88])); */
 
-// ---------------------------------------------------------------
+// ----------------------------------------------------------------------
 
-function selectionSort(arr) {
-  const swapES2015 = (arr, idx1, idx2) => {
-    [arr[idx1], arr[idx2]] = [arr[idx2], arr[idx1]];
-  };
+/* function insertionSort(arr) {
+  for (let i = 1; i < arr.length; i++) {
+    let lastUnsortedIndex = i;
 
-  for (
-    let firstUnsortedIndex = 0;
-    firstUnsortedIndex < arr.length;
-    firstUnsortedIndex++
-  ) {
-    let minIndex = firstUnsortedIndex;
-    for (let j = firstUnsortedIndex + 1; j < arr.length; j++) {
-      if (arr[j] < arr[minIndex]) {
-        minIndex = j;
+    for (let j = i - 1; j >= 0; j--) {
+      if (arr[j] > arr[i]) {
+        lastUnsortedIndex = j;
       }
     }
-
-    console.log(firstUnsortedIndex, minIndex);
-    if (minIndex !== firstUnsortedIndex)
-      swapES2015(arr, firstUnsortedIndex, minIndex);
+    if (lastUnsortedIndex !== i) {
+      swapES2015(arr, i, lastUnsortedIndex);
+    }
   }
 
   return arr;
 }
 
-console.log('bubblesort', selectionSort([23, 45, 6, 13, -3, 88]));
+console.log('insertionSort', insertionSort([23, 45, 6, 13, -3, 88])); */
+
+// ----------------------------------------------------------------------------------------
+
+/* function insertionSort(arr) {
+  for (let i = 1; i < arr.length; i++) {
+    let currentVal = arr[i];
+
+    for (var j = i - 1; j >= 0 /* && arr[j] > currentVal /; j--) {
+      if (arr[j] > currentVal) {
+        arr[j + 1] = arr[j];
+      } else {
+        // can't break out of a for loop like this
+        break;
+      }
+    }
+    arr[j + 1] = currentVal;
+  }
+
+  return arr;
+}
+
+console.log('insertionSort', insertionSort([23, 45, 6, 13, -3, 88])); */
+
+// --------------------------------------------------------------
+
+function insertionSort(arr) {
+  for (let i = 1; i < arr.length; i++) {
+    let currentVal = arr[i];
+    let j;
+
+    for (j = i - 1; j >= 0 && arr[j] > currentVal; j--) {
+      arr[j + 1] = arr[j];
+    }
+    arr[j + 1] = currentVal;
+  }
+
+  return arr;
+}
+
+console.log('insertionSort', insertionSort([23, 45, 6, 13, -3, 88]));
