@@ -83,7 +83,7 @@ console.log('bubblesort', bubbleSort([23, 45, 6, 12, 13])); */
 
 // ----------------------------------------------------------------
 
-function badBubbleSort(arr) {
+/* function badBubbleSort(arr) {
   for (let i = 0; i < arr.length; i++) {
     for (let j = 0; j < arr.length; j++) {
       console.log(arr, arr[j], arr[j + 1]);
@@ -97,4 +97,52 @@ function badBubbleSort(arr) {
   return arr;
 }
 
-console.log('bubblesort', badBubbleSort([23, 45, 6, 12, 13]));
+console.log('bubblesort', badBubbleSort([23, 45, 6, 12, 13])); */
+
+// ----------------------------------------------------------------
+
+/* function betterBubbleSort(arr) {
+  let lastUnsortedIndex = arr.length - 1;
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = 0; j < lastUnsortedIndex; j++) {
+      console.log(arr, arr[j], arr[j + 1]);
+      if (arr[j] > arr[j + 1]) {
+        // swap
+        swapES5(arr, j, j + 1);
+      }
+    }
+    lastUnsortedIndex--;
+    console.log('One pass complete!');
+  }
+
+  return arr;
+}
+
+console.log('bubblesort', betterBubbleSort([23, 45, 6, 12, 13, -3, 88])); */
+
+//---------------------------------------------------------------
+
+// bubbleSort optimised with noSwap variable
+function goodBubbleSort(arr) {
+  let lastUnsortedIndex = arr.length - 1;
+  let noSwaps;
+
+  for (let i = 0; i < arr.length; i++) {
+    noSwaps = true;
+    for (let j = 0; j < lastUnsortedIndex; j++) {
+      // console.log(arr, arr[j], arr[j + 1]);
+      if (arr[j] > arr[j + 1]) {
+        // swap
+        swapES5(arr, j, j + 1);
+        noSwaps = false;
+      }
+    }
+    if (noSwaps) break;
+    lastUnsortedIndex--;
+    // console.log('One pass complete!');
+  }
+
+  return arr;
+}
+
+console.log('bubblesort', goodBubbleSort([23, 45, 6, 13, -3, 88]));
