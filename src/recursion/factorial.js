@@ -8,6 +8,8 @@
 
 // console.log(factorialIter(12));
 
+// -------------------------------
+
 const factorialRec = (num) => {
   if (num === 1) return 1;
   return num * factorialRec(num - 1);
