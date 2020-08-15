@@ -5,7 +5,7 @@ function countDownRecursive(num) {
     return;
   }
   console.log(num);
-  num--;
+  num -= 1;
   countDownRecursive(num);
 }
 countDownRecursive(3);
@@ -20,7 +20,7 @@ countDownRecursive(3);
 
 // Iterative Version
 function countDownIterative(num) {
-  for (var i = num; i > 0; i--) {
+  for (let i = num; i > 0; i--) {
     console.log(i);
   }
   console.log('All done!');
