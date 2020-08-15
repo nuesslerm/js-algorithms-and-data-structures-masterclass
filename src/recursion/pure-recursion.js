@@ -12,35 +12,9 @@ const collectOddValues = (arr) => {
   return newArr;
 };
 
-console.log(
-  collectOddValues([
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10,
-    11,
-    12,
-    13,
-    14,
-    15,
-    16,
-    17,
-    18,
-    19,
-    20,
-    21,
-    22,
-    23,
-    24,
-    25,
-    26,
-    27,
-    28,
-  ])
-);
+console.log(collectOddValues([1, 2, 3, 4, 5, 6, 7, 8, 9]));
+
+// Pure Recursion Tips
+// For arrays, use methods like slice, the spread operator, and concat that make copies of arrays so you do not mutate them
+// * Remember that strings are immutable so you will need to use methods like slice, substr, or substring to make copies of strings
+// * To make copies of objects use Object.assign, or the spread operator
