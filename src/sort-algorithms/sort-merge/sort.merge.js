@@ -110,3 +110,7 @@ console.log('mergeSort(someArr)', mergeSort(someArr));
 // time-complexity (average): O(n logn)
 // time-complexity (worst): O(n logn)
 // space-complexity: O(n)
+
+// merge is O(n); split is O(logn)
+
+// big-O cheat-sheet: https://www.bigocheatsheet.com/
