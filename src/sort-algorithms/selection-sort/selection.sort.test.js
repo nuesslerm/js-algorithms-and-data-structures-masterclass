@@ -1,4 +1,4 @@
-import { sum, multiply } from './arithmetic.methods';
+import { sum, multiply } from '../../arithmetic/arithmetic.methods';
 
 describe('addition and multiplication', () => {
   // test sum
