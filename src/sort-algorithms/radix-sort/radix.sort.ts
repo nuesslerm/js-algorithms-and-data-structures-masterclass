@@ -69,39 +69,54 @@ interface arrayMap {
 //   return clonedNums;
 // }
 
+// function radixSort(nums: number[]): number[] {
+//   const iterations: number = mostDigits2(nums);
+
+//   function helper(helperNums, i) {
+//     if (i === iterations) return helperNums;
+
+//     const buckets: arrayMap = {
+//       0: [],
+//       1: [],
+//       2: [],
+//       3: [],
+//       4: [],
+//       5: [],
+//       6: [],
+//       7: [],
+//       8: [],
+//       9: [],
+//     };
+
+//     for (let num of helperNums) {
+//       buckets[getDigit2(num, i)].push(num);
+//     }
+//     helperNums = Object.values(buckets).reduce((acc, bucketContent) => {
+//       return acc.concat(bucketContent);
+//     }, []);
+//     return helper(helperNums, i + 1);
+//   }
+//   const result = helper(nums, 0);
+
+//   return result;
+// }
+
 function radixSort(nums: number[]): number[] {
   const iterations: number = mostDigits2(nums);
 
-  function helper(helperNums, i) {
-    if (i === iterations) return helperNums;
+  for (let i = 0; i < iterations; i++) {
+    // const buckets: number[][] = Array.from({ length: 10 }, () => []);
+    // const buckets: number[][] = [...new Array(10)].fill([]); <- doesn't work because buckets[0].push(el) will push element el to every array element, not just 0
+    const buckets: number[][] = [...new Array(10)].map(() => []);
 
-    const buckets: arrayMap = {
-      0: [],
-      1: [],
-      2: [],
-      3: [],
-      4: [],
-      5: [],
-      6: [],
-      7: [],
-      8: [],
-      9: [],
-    };
+    for (let num of nums) buckets[getDigit2(num, i)].push(num);
 
-    for (let num of helperNums) {
-      buckets[getDigit2(num, i)].push(num);
-    }
-    helperNums = Object.values(buckets).reduce((acc, bucketContent) => {
-      return acc.concat(bucketContent);
-    }, []);
-    return helper(helperNums, i + 1);
+    nums = buckets.reduce(
+      (acc: number[], curr: number[]) => acc.concat(curr),
+      [] as number[]
+    );
   }
-  const result = helper(nums, 0);
-
-  return result;
+  return nums;
 }
 
-console.log(
-  'radixSort',
-  radixSort([32123, 12, 12123, 131, 13, 4, 1, 22123, 3223, 432, 53, 32])
-);
+console.log('radixSort', radixSort([32123, 12, 12123, 131, 13]));
