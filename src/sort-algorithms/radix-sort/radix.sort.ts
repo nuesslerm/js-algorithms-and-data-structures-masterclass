@@ -101,20 +101,38 @@ interface arrayMap {
 //   return result;
 // }
 
+// function radixSort(nums: number[]): number[] {
+//   const iterations: number = mostDigits2(nums);
+
+//   for (let i = 0; i < iterations; i++) {
+//     // const buckets: number[][] = Array.from({ length: 10 }, () => []);
+//     // const buckets: number[][] = [...new Array(10)].fill([]); <- doesn't work because buckets[0].push(el) will push element el to every array element, not just 0
+//     const buckets: number[][] = [...new Array(10)].map(() => []);
+
+//     for (let num of nums) {
+//       const currDigit = getDigit2(num, i);
+//       buckets[currDigit].push(num);
+//     }
+
+//     // nums = [].concat(...buckets);
+//     nums = buckets.reduce(
+//       (acc: number[], curr: number[]) => acc.concat(curr),
+//       [] as number[]
+//     );
+//   }
+//   return nums;
+// }
+
 function radixSort(nums: number[]): number[] {
   const iterations: number = mostDigits2(nums);
 
   for (let i = 0; i < iterations; i++) {
-    // const buckets: number[][] = Array.from({ length: 10 }, () => []);
-    // const buckets: number[][] = [...new Array(10)].fill([]); <- doesn't work because buckets[0].push(el) will push element el to every array element, not just 0
     const buckets: number[][] = [...new Array(10)].map(() => []);
-
-    for (let num of nums) buckets[getDigit2(num, i)].push(num);
-
-    nums = buckets.reduce(
-      (acc: number[], curr: number[]) => acc.concat(curr),
-      [] as number[]
-    );
+    for (let num of nums) {
+      const currDigit = getDigit2(num, i);
+      buckets[currDigit].push(num);
+    }
+    nums = [].concat(...buckets);
   }
   return nums;
 }

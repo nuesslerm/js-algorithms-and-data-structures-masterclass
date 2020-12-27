@@ -1,4 +1,4 @@
-export const naiveStringSearch = (long, short) => {
+export default function naiveStringSearch(long, short) {
   if (short.length > long.length) return 0;
 
   let count = 0;
@@ -10,4 +10,4 @@ export const naiveStringSearch = (long, short) => {
     }
   }
   return count;
-};
+}
