@@ -157,13 +157,14 @@ class SinglyLinkedList {
   }
 
   reverse() {
-    let trueNext;
     let prev = null;
+    let trueNext;
     let current = this.head;
 
     while (current) {
-      trueNext = current.next && { ...current.next };
-      current.next = prev;
+      // trueNext = current.next && { ...current.next }; // becomes one shorter each iteration
+      trueNext = current.next; // becomes one shorter each iteration
+      current.next = prev; // becomes one longer each iteration
       prev = current;
       current = trueNext;
     }
@@ -173,6 +174,34 @@ class SinglyLinkedList {
     this.tail = temp;
 
     return this;
+
+    // let current = this.head;
+    // this.head = this.tail;
+    // this.tail = current;
+
+    // let prev = null;
+    // let next;
+
+    // for (let i = 0; i < this.length; i++) {
+    //   next = current.next;
+    //   current.next = prev;
+    //   prev = current;
+    //   current = next;
+    // }
+
+    // return this;
+  }
+
+  print() {
+    const arr = [];
+    let current = this.head;
+
+    while (current) {
+      arr.push(current.val);
+      current = current.next;
+    }
+
+    console.log(arr);
   }
 }
 
@@ -182,7 +211,18 @@ list.push(1);
 list.push(2);
 list.push(3);
 list.push(4);
-list.push(5);
+list.push(6);
+list.print();
+list.reverse();
+list.print();
 
-console.log('oldList', list);
-console.log(list.reverse(), 'newList', list);
+/*
+ * insertion at start or end - O(1)
+ * insertion in middle - O(1) to O(n)
+ * removal - O(1) to O(n)
+ * searching - O(n)
+ * access - O(n)
+ *
+ * linked lists excell at insertion and deletion
+ * arrays are best for random access
+ */
