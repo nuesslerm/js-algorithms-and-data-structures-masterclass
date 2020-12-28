@@ -155,18 +155,34 @@ class SinglyLinkedList {
 
     return removed;
   }
+
+  reverse() {
+    let trueNext;
+    let prev = null;
+    let current = this.head;
+
+    while (current) {
+      trueNext = current.next && { ...current.next };
+      current.next = prev;
+      prev = current;
+      current = trueNext;
+    }
+
+    const temp = this.head;
+    this.head = prev;
+    this.tail = temp;
+
+    return this;
+  }
 }
 
 const list = new SinglyLinkedList();
 
-console.log(
-  'singlyLinkedList',
-  1,
-  list.unshift(32),
-  2,
-  list.push(13),
-  list.insert(1, 12),
-  list.remove(2),
-  'newList',
-  list
-);
+list.push(1);
+list.push(2);
+list.push(3);
+list.push(4);
+list.push(5);
+
+console.log('oldList', list);
+console.log(list.reverse(), 'newList', list);
