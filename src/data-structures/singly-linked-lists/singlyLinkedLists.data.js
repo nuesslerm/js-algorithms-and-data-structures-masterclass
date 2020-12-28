@@ -144,7 +144,7 @@ class SinglyLinkedList {
   }
 
   remove(idx) {
-    if (idx < 0 || idx >= this.length) return false;
+    if (idx < 0 || idx >= this.length) return undefined;
     if (idx === this.length - 1) return this.pop();
     if (idx === 0) return this.shift();
 
@@ -192,7 +192,7 @@ class SinglyLinkedList {
     // return this;
   }
 
-  print() {
+  printAsArr() {
     const arr = [];
     let current = this.head;
 
@@ -203,6 +203,10 @@ class SinglyLinkedList {
 
     console.log(arr);
   }
+
+  printListInstance() {
+    console.log(this);
+  }
 }
 
 const list = new SinglyLinkedList();
@@ -212,9 +216,11 @@ list.push(2);
 list.push(3);
 list.push(4);
 list.push(6);
-list.print();
+list.printAsArr();
+list.printListInstance();
 list.reverse();
-list.print();
+list.printAsArr();
+list.printListInstance();
 
 /*
  * insertion at start or end - O(1)
