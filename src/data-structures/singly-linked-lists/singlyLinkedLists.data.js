@@ -106,10 +106,42 @@ class SinglyLinkedList {
   }
 
   set(idx, newVal) {
-    if (!this.get(idx)) return false;
+    const foundNode = this.get(idx);
+    if (!foundNode) return false;
 
-    this.get(idx).val = newVal;
+    foundNode.val = newVal;
     return true;
+  }
+
+  insert(idx, insertedVal) {
+    if (idx < 0 || idx > this.length) return false;
+    if (idx === this.length) return Boolean(this.push(insertedVal));
+    if (idx === 0) return Boolean(this.unshift(insertedVal));
+
+    const newNode = new Node(insertedVal);
+    const prev = this.get(idx - 1);
+
+    newNode.next = prev.next;
+    prev.next = newNode;
+    this.length += 1;
+
+    return true;
+
+    // const newNode = new Node(insertedVal);
+
+    // if (idx === 0) {
+    //   this.unshift(insertedVal);
+    //   return true;
+    // }
+
+    // const foundNode = this.get(idx - 1);
+    // if (!foundNode) return false;
+
+    // newNode.next = foundNode.next;
+    // foundNode.next = newNode;
+    // this.length += 1;
+
+    // return true;
   }
 }
 
@@ -121,12 +153,8 @@ console.log(
   list.unshift(32),
   2,
   list.push(13),
-  3,
-  list.push(123),
-  3,
-  list.get(1),
   4,
-  list.set(0, 10),
+  list.insert(2, 12),
   5,
   list
 );
