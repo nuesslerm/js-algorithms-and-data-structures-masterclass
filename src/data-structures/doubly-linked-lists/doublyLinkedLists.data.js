@@ -30,7 +30,6 @@ class DoublyLinkedList {
     return this;
   }
 
-  // test again
   pop() {
     if (!this.head) return undefined;
 
@@ -52,7 +51,6 @@ class DoublyLinkedList {
     return oldTail;
   }
 
-  // test again
   shift() {
     if (!this.head) return undefined;
 
@@ -204,3 +202,17 @@ list.printAsArr();
 list.reverse();
 list.printAsArr();
 // list.printListInstance();
+
+/*
+ * insertion at start or end - O(1)
+ * insertion in middle - O(1) to O(n)
+ * removal at start or end - O(1)
+ * removal in middle- O(1) to O(n)
+ * searching - O(n) -> technically it's O(n/2), but that still counts as O(n)
+ * access - O(n)
+ *
+ * doubly linked lists are almost identical to singly linked lists, except there's
+ * an additional pointer to previous nodes
+ * better than singly linked lists for finding nodes, which can be done in half the time
+ * however, they take up more memory considering the extra pointer
+ */

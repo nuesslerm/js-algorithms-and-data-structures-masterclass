@@ -233,7 +233,8 @@ list.printListInstance();
 /*
  * insertion at start or end - O(1)
  * insertion in middle - O(1) to O(n)
- * removal - O(1) to O(n)
+ * removal at start or end - O(1)
+ * removal in middle- O(1) to O(n)
  * searching - O(n)
  * access - O(n)
  *
