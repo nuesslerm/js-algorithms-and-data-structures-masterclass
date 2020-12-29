@@ -41,6 +41,15 @@ class SinglyLinkedList {
     if (!this.head) return undefined;
 
     let current = this.head;
+
+    if (this.length === 1) {
+      this.head = null;
+      this.tail = null;
+      this.length -= 1;
+
+      return current;
+    }
+
     let newTail = current;
 
     while (current.next) {
@@ -52,11 +61,6 @@ class SinglyLinkedList {
     this.tail.next = null;
     this.length -= 1;
 
-    if (this.length === 0) {
-      this.head = null;
-      this.tail = null;
-    }
-
     return current;
   }
 
@@ -64,13 +68,17 @@ class SinglyLinkedList {
     if (!this.head) return undefined;
 
     const oldHead = this.head;
+
+    if (this.length === 1) {
+      this.head = null;
+      this.tail = null;
+      this.length -= 1;
+
+      return oldHead;
+    }
+
     this.head = oldHead.next;
     this.length -= 1;
-
-    if (this.length === 0) {
-      // this.head = null;
-      this.tail = null;
-    }
 
     return oldHead;
   }
@@ -92,7 +100,7 @@ class SinglyLinkedList {
   }
 
   get(idx) {
-    if (idx < 0 || idx >= this.length) return undefined;
+    if (idx < 0 || idx >= this.length) return null;
 
     let counter = 0;
     let current = this.head;

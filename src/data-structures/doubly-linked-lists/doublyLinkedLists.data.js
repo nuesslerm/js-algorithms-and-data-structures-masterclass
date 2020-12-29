@@ -7,7 +7,7 @@ class Node {
   }
 }
 
-class DoublyLinkedLists {
+class DoublyLinkedList {
   constructor() {
     this.head = null;
     this.tail = null;
@@ -30,36 +30,46 @@ class DoublyLinkedLists {
     return this;
   }
 
+  // test again
   pop() {
     if (!this.head) return undefined;
 
     const oldTail = this.tail;
-    this.tail = this.tail.prev;
-    this.length -= 1;
 
-    if (this.length !== 0) {
-      this.tail.next = null;
-    } else {
+    if (this.length === 1) {
       this.head = null;
-      // this.tail = null;
+      this.tail = null;
+      this.length -= 1;
+
+      return oldTail;
     }
+
+    this.tail = oldTail.prev;
+    this.tail.next = null;
+    this.length -= 1;
+    oldTail.prev = null; // removing lingering prev connections from popped tail
 
     return oldTail;
   }
 
+  // test again
   shift() {
     if (!this.head) return undefined;
 
     const oldHead = this.head;
-    this.head = this.head.next;
-    this.length -= 1;
 
-    if (this.length !== 0) {
-      this.head.prev = null;
-    } else {
-      // this.head = null;
+    if (this.length === 1) {
+      this.head = null;
       this.tail = null;
+      this.length -= 1;
+
+      return oldHead;
     }
+
+    this.head = oldHead.next;
+    this.head.prev = null;
+    this.length -= 1;
+    oldHead.next = null; // removing lingering next connections from shifted head
 
     return oldHead;
   }
@@ -82,13 +92,23 @@ class DoublyLinkedLists {
   }
 
   get(idx) {
-    if (idx < 0 || idx >= this.length) return undefined;
+    if (idx < 0 || idx >= this.length) return null;
 
     let counter = 0;
-    let current = this.head;
 
-    while (counter < idx) {
-      current = current.next;
+    if (idx <= this.length / 2) {
+      let current = this.head;
+      while (counter < idx) {
+        current = current.next;
+        counter += 1;
+      }
+
+      return current;
+    }
+
+    let current = this.tail;
+    while (counter < this.length - idx - 1) {
+      current = current.prev;
       counter += 1;
     }
 
@@ -109,11 +129,13 @@ class DoublyLinkedLists {
     if (idx === 0) return Boolean(this.unshift(insertedVal));
 
     const newNode = new Node(insertedVal);
-    const { prev } = this.get(idx);
+    const beforeNode = this.get(idx);
+    const afterNode = beforeNode.next;
 
-    newNode.next = prev.next;
-    newNode.prev = prev;
-    prev.next = newNode;
+    newNode.prev = beforeNode;
+    newNode.next = afterNode;
+    afterNode.prev = newNode;
+    beforeNode.next = newNode;
     this.length += 1;
     return true;
   }
@@ -124,9 +146,14 @@ class DoublyLinkedLists {
     if (idx === 0) return this.shift();
 
     const removed = this.get(idx);
-    removed.prev.next = removed.next;
-    removed.next.prev = removed.prev;
+    const beforeRemoved = removed.prev;
+    const afterRemoved = removed.next;
+
+    beforeRemoved.next = afterRemoved;
+    afterRemoved.prev = beforeRemoved;
     this.length -= 1;
+    removed.prev = null; // removing lingering prev connections from removed node
+    removed.next = null; // removing lingering next connections from removed node
 
     return removed;
   }
@@ -166,10 +193,12 @@ class DoublyLinkedLists {
   }
 }
 
-const list = new DoublyLinkedLists();
+const list = new DoublyLinkedList();
 
 list.push(1);
-list.pop();
+list.push(2);
+list.push(3);
+list.set(23, 23);
 list.printAsArr();
 // list.printListInstance();
 list.reverse();
