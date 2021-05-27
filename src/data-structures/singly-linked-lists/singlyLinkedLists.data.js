@@ -1,3 +1,4 @@
+/* eslint-disable no-return-assign */
 /* eslint-disable max-classes-per-file */
 // piece of data - val
 // reference to next node - next
@@ -24,16 +25,17 @@ class SinglyLinkedList {
 
   push(val) {
     const newNode = new Node(val);
+
     if (!this.head) {
       this.head = newNode;
       this.tail = this.head;
-    } else {
-      this.tail.next = newNode;
-      this.tail = this.tail.next;
+      this.length += 1;
+      return this;
     }
 
+    this.tail.next = newNode;
+    this.tail = this.tail.next;
     this.length += 1;
-
     return this;
   }
 
@@ -72,14 +74,12 @@ class SinglyLinkedList {
     if (this.length === 1) {
       this.head = null;
       this.tail = null;
-      this.length -= 1;
-
+      this.length = 0;
       return oldHead;
     }
 
     this.head = oldHead.next;
     this.length -= 1;
-
     return oldHead;
   }
 
@@ -89,14 +89,12 @@ class SinglyLinkedList {
     if (!this.head) {
       this.head = newNode;
       this.tail = this.head;
-    } else {
-      newNode.next = this.head;
-      this.head = newNode;
+      return (this.length += 1);
     }
 
-    this.length += 1;
-
-    return this;
+    newNode.next = this.head;
+    this.head = newNode;
+    return (this.length += 1);
   }
 
   get(idx) {
