@@ -2,6 +2,7 @@
   "name": "js-algorithms-and-data-structures-masterclass",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "repository": "git@github.com:nuesslerm/js-algorithms-and-data-structures-masterclass.git",
   "author": "nuesslerm@gmail.com",
   "license": "MIT",
@@ -16,21 +17,25 @@
   "devDependencies": {
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.10.4",
-    "@babel/node": "^7.0.0",
+    "@babel/node": "^7.14.7",
     "@babel/plugin-proposal-logical-assignment-operators": "^7.14.2",
     "@babel/preset-env": "^7.10.4",
+    "@types/lodash": "^4.14.170",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.1.0",
     "eslint": "^7.27.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-config-prettier": "^6.11.0",
-    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-prettier": "^3.1.4",
     "husky": "^4.2.5",
     "jest": "^26.1.0",
     "lint-staged": "^10.2.11",
     "nodemon": "^2.0.4",
     "prettier": "^2.0.5"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
   }
 }
