@@ -5,9 +5,12 @@
     "es2020": true,
     "node": true
   },
-  "parser": "babel-eslint",
-  "extends": ["airbnb-base", "plugin:prettier/recommended"],
-  "plugins": ["prettier"],
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": ["@typescript-eslint", "prettier", "import"],
   "parserOptions": {
     "ecmaVersion": 11,
     "sourceType": "module"

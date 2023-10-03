@@ -43,15 +43,23 @@
  */
 
 // Observer
-function createObserver() {
-  let listeners = [];
+type ListenerFn<Event> = (event: Event) => void;
+type NoopFn = () => void;
+
+type Observer<Event> = {
+  subscribe(listener: ListenerFn<Event>): NoopFn;
+  publish(event: Event): void;
+};
+
+function createObserver<Event>(): Observer<Event> {
+  let listeners: ListenerFn<Event>[] = [];
 
   return {
     /**
      * subscribe function
      * @return unsubscribe function
      */
-    subscribe(listener) {
+    subscribe(listener: ListenerFn<Event>): NoopFn {
       listeners.push(listener);
       return () => {
         listeners = listeners.filter((l) => l !== listener);
@@ -60,101 +68,114 @@ function createObserver() {
     /**
      * publish function - goes over each listener fn in listeners and calls them with the published event
      */
-    publish(event) {
+    publish(event: Event): void {
       listeners.forEach((l) => l(event));
     },
   };
 }
 
-const deduplicate = (array) => [...new Set(array)];
+const deduplicate = <T>(array: T[]): T[] => [...new Set(array)];
 
-class UndirectedGraph {
-  constructor() {
-    this.adjacencyList = {};
+type AdjacencyList = Record<string, string[]>;
+
+export class UndirectedGraph {
+  public adjacencyList: AdjacencyList;
+
+  #afterAddObserver: Observer<AdjacencyList>;
+
+  constructor(adjacencyList: AdjacencyList = {}) {
+    this.adjacencyList = adjacencyList;
+    this.#afterAddObserver = createObserver();
   }
 
-  #afterAddObserver = createObserver();
-
-  addVertex(vertex) {
+  addVertex(vertex: string): AdjacencyList {
     if (Array.isArray(this.adjacencyList[vertex])) {
       throw new Error(`vertex ${vertex} was already added!`);
     }
 
-    const newAdjacencyList = { ...this.adjacencyList, [vertex]: [] };
+    const newAdjacencyList: AdjacencyList = {
+      ...this.adjacencyList,
+      [vertex]: [],
+    };
+
     this.#afterAddObserver.publish(newAdjacencyList);
 
-    // eslint-disable-next-line no-return-assign
-    return (this.adjacencyList = newAdjacencyList);
+    this.adjacencyList = newAdjacencyList;
+    return this.adjacencyList;
   }
 
-  removeVertex(vertexToRemove) {
+  removeVertex(vertexToRemove: string): AdjacencyList {
     const list = this.adjacencyList;
-    if (!this.validateVertex(vertexToRemove)) return list;
+    if (!this.validateVertex(vertexToRemove)) {
+      return list;
+    }
 
     const { [vertexToRemove]: removed, ...rest } = this.adjacencyList;
-
-    // // eslint-disable-next-line no-restricted-syntax
-    // for (const vertex in rest) {
-    //   // The body of a for-in should be wrapped in an if statement
-    //   // to filter unwanted properties from the prototype
-    //   if (Object.prototype.hasOwnProperty.call(rest, vertex)) {
-    //     rest[vertex] = rest[vertex].filter((v) => v !== vertexToRemove);
-    //   }
-    // }
 
     Object.keys(rest).forEach((vertex) => {
       rest[vertex] = rest[vertex].filter((v) => v !== vertexToRemove);
     });
 
-    // eslint-disable-next-line no-return-assign
-    return (this.adjacencyList = rest);
+    this.adjacencyList = rest;
+    return this.adjacencyList;
   }
 
-  removeVertex2(vertexToRemove) {
+  removeVertex2(vertexToRemove: string): AdjacencyList {
     const list = this.adjacencyList;
-    if (!this.validateVertex(vertexToRemove)) return list;
+    if (!this.validateVertex(vertexToRemove)) {
+      return list;
+    }
 
     while (list[vertexToRemove].length > 0) {
-      const vertex = list[vertexToRemove].pop();
-      this.removeEdge(vertexToRemove, vertex);
+      const vertex: string | undefined = list[vertexToRemove].pop();
+      if (vertex) {
+        this.removeEdge(vertexToRemove, vertex);
+      }
     }
 
     delete list[vertexToRemove];
 
-    return list;
+    this.adjacencyList = list;
+    return this.adjacencyList;
   }
 
-  addEdge(vertex0, vertex1) {
+  addEdge(vertex0: string, vertex1: string): AdjacencyList {
     const list = this.adjacencyList;
-    if (![vertex0, vertex1].every((v) => this.validateVertex(v))) return list;
+    if (![vertex0, vertex1].every((v) => this.validateVertex(v))) {
+      return list;
+    }
 
     // no circular references allowed
-    if (vertex0 === vertex1) return list;
+    if (vertex0 === vertex1) {
+      return list;
+    }
 
-    // add undirected edge to the graph
-    // this.adjacencyList[vertex0] = deduplicate([...list[vertex0], vertex1]);
-    // this.adjacencyList[vertex1] = deduplicate([...list[vertex1], vertex0]);
     list[vertex0] = deduplicate([...list[vertex0], vertex1]);
     list[vertex1] = deduplicate([...list[vertex1], vertex0]);
 
-    // return this.adjacencyList;
-    return list;
+    this.adjacencyList = list;
+    return this.adjacencyList;
   }
 
-  removeEdge(vertex0, vertex1) {
+  removeEdge(vertex0: string, vertex1: string): AdjacencyList {
     const list = this.adjacencyList;
-    if (![vertex0, vertex1].every((v) => this.validateVertex(v))) return list;
+    if (![vertex0, vertex1].every((v) => this.validateVertex(v))) {
+      return list;
+    }
 
     // no circular references allowed
-    if (vertex0 === vertex1) return list;
+    if (vertex0 === vertex1) {
+      return list;
+    }
 
     list[vertex0] = list[vertex0].filter((v) => v !== vertex1);
     list[vertex1] = list[vertex1].filter((v) => v !== vertex0);
 
-    return list;
+    this.adjacencyList = list;
+    return this.adjacencyList;
   }
 
-  validateVertex(vertex) {
+  validateVertex(vertex: string): boolean {
     if (!this.adjacencyList[vertex]) {
       throw new Error(`vertex ${vertex} not found!`);
     }
@@ -167,31 +188,31 @@ class UndirectedGraph {
    * @param {function} listener function to be run when event is published
    * @return unsubscribe function
    */
-  onAfterAdd(listener) {
+  onAfterAdd(listener: ListenerFn<AdjacencyList>): NoopFn {
     return this.#afterAddObserver.subscribe(listener);
   }
 }
 
-const graph = new UndirectedGraph();
+// const graph = new UndirectedGraph();
 
-graph.onAfterAdd(console.log);
+// graph.onAfterAdd(console.log);
 
-graph.addVertex('Tokyo');
-graph.addVertex('Berlin');
+// graph.addVertex('Tokyo');
 // graph.addVertex('Berlin');
-graph.addVertex('New York');
+// graph.addVertex('Berlin');
+// graph.addVertex('New York');
 
-graph.addEdge('New York', 'Berlin');
+// graph.addEdge('New York', 'Berlin');
 // graph.addEdge('New York', 'B');
-graph.addEdge('New York', 'Tokyo');
-graph.addEdge('Tokyo', 'Berlin');
-graph.addEdge('New York', 'Berlin');
-graph.addEdge('Berlin', 'New York');
-graph.addEdge('New York', 'New York');
+// graph.addEdge('New York', 'Tokyo');
+// graph.addEdge('Tokyo', 'Berlin');
+// graph.addEdge('New York', 'Berlin');
+// graph.addEdge('Berlin', 'New York');
+// graph.addEdge('New York', 'New York');
 
 // graph.removeEdge('Berlin', 'N');
-graph.removeEdge('Berlin', 'New York');
-console.log('adjacencyList: ', graph.adjacencyList);
+// graph.removeEdge('Berlin', 'New York');
+// console.log('adjacencyList: ', graph.adjacencyList);
 // graph.removeEdge('Berlin', 'New York');
 // graph.removeEdge('Berlin', 'New York');
 // graph.removeEdge('New York', 'New York');
@@ -200,6 +221,6 @@ console.log('adjacencyList: ', graph.adjacencyList);
 // // graph.removeEdge('SF', 'New York');
 
 // graph.removeVertex2('New York');
-graph.removeVertex('New York');
+// graph.removeVertex('New York');
 // graph.removeVertex('New');
-console.log('adjacencyList: ', graph.adjacencyList);
+// console.log('adjacencyList: ', graph.adjacencyList);
